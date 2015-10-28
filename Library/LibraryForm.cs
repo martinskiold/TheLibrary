@@ -48,7 +48,6 @@ namespace Library {
             bookCopyService = new BookCopyService(repoFactory);
             memberService = new MemberService(repoFactory);
             loanService = new LoanService(repoFactory);
-            int test = 0;
         }
 
         /// <summary>
