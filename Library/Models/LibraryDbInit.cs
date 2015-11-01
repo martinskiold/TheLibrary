@@ -1,4 +1,7 @@
-﻿using System;
+﻿//Library
+//Martin Skiöld
+//Version 1.0 2015-11-02
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,6 +16,7 @@ namespace Library.Models {
         protected override void Seed(LibraryContext context) {
             base.Seed(context);
 
+            // Initializing example data.
             Author author = new Author()
             {
                 Name = "Alexandre Dumas"
@@ -122,7 +126,7 @@ namespace Library.Models {
             Loan l4 = new Loan()
             {
                 DateTimeOfLoan = DateTime.Now,
-                DateTimeDueDate = DateTime.Now.AddDays(-35),
+                DateTimeDueDate = DateTime.Now.AddDays(15),
                 Member = m2,
                 BookCopy = bc8
             };

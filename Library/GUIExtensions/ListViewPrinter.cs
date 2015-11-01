@@ -27,7 +27,7 @@ namespace Library
         {
             if (lv != null)
             {
-                // Clears Data in the ListView.
+                // Clears the items in the ListView.
                 lv.Items.Clear();
 
                 if (columnDataMatrix != null)
@@ -35,8 +35,10 @@ namespace Library
                     // Print if there is any data to print.
                     if (columnDataMatrix.Count > 0)
                     {
+                        // Iterate through all data to be printed.
                         foreach (string[] rowData in columnDataMatrix)
                         {
+                            // Prints the data to a new row in the ListView.
                             lv.Items.Add(new ListViewItem(rowData));
                         }
                     }
@@ -45,18 +47,9 @@ namespace Library
             }
             else
             {
+                // Error message. (Could not print to the ListView)
                 MessageBox.Show("ListViewNullReferenceError","TheLibraryApplication has encountered a Non-Critical Error when printing data to the screen. Please notify Support and then Continue normally.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-        /// <summary>
-        /// Shell to extend the class behaviour with single row updates.
-        /// </summary>
-        /// <param name="columnData"></param>
-        /// <param name="lv"></param>
-        // public static void SingleRowUpdate(string[] columnData, ListView lv) 
-        // {
-        // }
     }
 }

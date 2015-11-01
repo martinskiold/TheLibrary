@@ -12,13 +12,22 @@ using Library.Repositories;
 
 namespace Library.Services
 {
+    /// <summary>
+    /// Application logic regarding Members.
+    /// </summary>
     public class MemberService : IService<UpdatedEventArgs<Member>>
     {
+        // Handles events triggered from changes to the library's Members.
         public event EventHandler<UpdatedEventArgs<Member>> Updated;
 
+        // The repositories used by this libraryservice.
         private MemberRepository _memberRepository;
         private LoanRepository _loanRepository;
 
+        /// <summary>
+        /// Creates the application logic context necessary for handling the Members of The library.
+        /// </summary>
+        /// <param name="repoFactory"></param>
         public MemberService(RepositoryFactory repoFactory) 
         {
             _memberRepository = repoFactory.GetMemberRepository();
@@ -81,7 +90,6 @@ namespace Library.Services
             {
                 return false;
             }
-
         }
 
         /// <summary>
@@ -131,15 +139,19 @@ namespace Library.Services
         public IEnumerable<Loan> CurrentLoans(int id)
         {
             var member = _memberRepository.Find(id);
+            // If there was no matching member.
             if (member == null) 
             {
                 return default(List<Loan>);
             }
+            // Gets the member's loans.
             var membersLoans = member.Loans;
+            // If the member has no loan.
             if (membersLoans == null) 
             {
                 return default(List<Loan>);
             }
+            // Return the members current loans.
             return membersLoans.Where(l => l.DateTimeOfReturn == null);
         }
 
@@ -160,6 +172,7 @@ namespace Library.Services
             {
                 return default(List<Loan>);
             }
+            // Returns the member's loans that has a date of return. (Which means the loan is not active).
             return membersLoans.Where(l => l.DateTimeOfReturn != null);
         }
 
@@ -180,6 +193,9 @@ namespace Library.Services
             {
                 return default(List<Loan>);
             }
+            // Returns the member's loans that has a duedate that has 
+            // been passed and that at the same time doesn't have a definite return date.
+            // This means the loan is currently active and overdue.
             return membersLoans.Where(l => DateTime.Now > l.DateTimeDueDate && l.DateTimeOfReturn == null);
         }
 

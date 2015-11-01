@@ -11,15 +11,24 @@ using Library.Repositories;
 
 namespace Library.Services
 {
+    /// <summary>
+    /// Application logic regarding Loans.
+    /// </summary>
     public class LoanService : IService<UpdatedEventArgs<Loan>>
     {
+        // Handles events triggered from changes to the library's Loans.
         public event EventHandler<UpdatedEventArgs<Loan>> Updated;
 
+        // The repositories used by this libraryservice.
         LoanRepository _loanRepository;
         BookCopyRepository _bookCopyRepository;
         MemberRepository _memberRepository;
         BookRepository _bookRepository;
 
+        /// <summary>
+        /// Creates the application logic context necessary for handling the Loans of The library.
+        /// </summary>
+        /// <param name="repoFactory"></param>
         public LoanService(RepositoryFactory repoFactory) 
         {
             _loanRepository = repoFactory.GetLoanRepository();
@@ -43,10 +52,12 @@ namespace Library.Services
                 var copiesOnLoan = _loanRepository.All().Where(l => l.DateTimeOfReturn == null).Select(l => l.BookCopy);
                 var availableBookCopies = Enumerable.Except(copies, copiesOnLoan);
 
+                // If there is any available BookCopies of the book.
                 if (availableBookCopies.Count() > 0)
                 {
-                    // Takes the first available book.
+                    // Takes the first available BookCopy.
                     BookCopy copy = availableBookCopies.ElementAt(0);
+                    // Creates a loan with the available BookCopy.
                     Loan loan = new Loan()
                     {
                         DateTimeOfLoan = DateTime.Now,
@@ -56,6 +67,7 @@ namespace Library.Services
                     };
                     return Add(loan);
                 }
+                // There is no available BookCopy of the book and false is therefor returned.
             }
             return false;
         }
@@ -139,16 +151,22 @@ namespace Library.Services
         {
             int fine = 0;
             var loan = Find(loanId);
+
+            // If there is a matching loan.
             if (loan != null)
             {
-                TimeSpan span = DateTime.Now.Subtract(loan.DateTimeDueDate);
+                // If duedate has passed.
                 if (DateTime.Now > loan.DateTimeDueDate)
                 {
+                    // Calculate fine.
                     fine = CalculateOverdueFine(loan.Id);
                 }
+                // Edit the loan so that it is marked as returned.
                 loan.DateTimeOfReturn = DateTime.Now;
+                // Edit the record in the database.
                 Edit(loan);
             }
+            // Return the amount of fine. If 0 is returned, the book has been correctly returned before the duedate.
             return fine;
         }
 
@@ -160,11 +178,15 @@ namespace Library.Services
         public int CalculateOverdueFine(int loanId)
         {
             var loan = _loanRepository.Find(loanId);
+
+            // If there is a matching loan.
             if (loan == null)
             {
+                // If there is no matching loan, there is nothing to base the fine on.
                 return 0;
             }
 
+            // Get the timespan between now and the date that the book passed its duedate.
             TimeSpan span = DateTime.Now.Subtract(loan.DateTimeDueDate);
 
             // 10 kr for each day overdue.
@@ -172,17 +194,28 @@ namespace Library.Services
         }
 
         /// <summary>
-        /// Changes days to the loans duedate.
-        /// To fake an overdue, use negative int as param="days"
+        /// Add months overdue to the DueDate.
+        /// To fake an overdue, use negative int as argument for months.
         /// </summary>
         /// <param name="loanId"></param>
-        /// <param name="days"></param>
-        public void ChangeDaysToDueDate(int loanId, int days)
+        /// <param name="months"></param>
+        public void AddMonthsOverdueToDueDate(int loanId, int months)
         {
             var loan = Find(loanId);
+
+            // If there is a matching loan.
             if (loan != null)
             {
-                loan.DateTimeDueDate = loan.DateTimeDueDate.AddDays(days);
+                // NOT NEEDED. Eliminates current duedate if the duedate hasn't passed.
+                if (loan.DateTimeDueDate > DateTime.Now)
+                {
+                    loan.DateTimeDueDate = DateTime.Now;
+                }
+
+                // Add months to the duedate.
+                loan.DateTimeDueDate = loan.DateTimeDueDate.AddMonths(months);
+
+                // Edits the database record.
                 Edit(loan);
             }
         }
@@ -204,6 +237,7 @@ namespace Library.Services
         /// <returns></returns>
         public IEnumerable<Loan> AllCurrent()
         {
+            // Retrieves all loans currently active. (Not returned).
             var currentLoans = _loanRepository.
                 All().
                 Where(l => l.DateTimeOfReturn == null);
@@ -216,6 +250,7 @@ namespace Library.Services
         /// <returns></returns>
         public IEnumerable<Loan> AllReturned()
         {
+            // Retrieves all returned loans.
             var loansReturned = _loanRepository.
                 All().
                 Where(l => l.DateTimeOfReturn != null);
@@ -228,6 +263,7 @@ namespace Library.Services
         /// <returns></returns>
         public IEnumerable<Loan> AllCurrentlyOverdue()
         {
+            // Retrieves all loans currently overdue and active.
             var currentlyOverdue = _loanRepository.
                 All().
                 Where(l => DateTime.Now > l.DateTimeDueDate && l.DateTimeOfReturn == null);

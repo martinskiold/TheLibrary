@@ -123,6 +123,7 @@
             this.lvBooksBookDescription,
             this.lvBooksAuthor});
             this.lvBooks.FullRowSelect = true;
+            this.lvBooks.HideSelection = false;
             this.lvBooks.Location = new System.Drawing.Point(6, 19);
             this.lvBooks.Name = "lvBooks";
             this.lvBooks.Size = new System.Drawing.Size(748, 167);

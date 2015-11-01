@@ -26,12 +26,15 @@ namespace Library
         /// <returns></returns>
         public static int GetSelectedItemIdFromListView(ListView lv)
         {
+            // If the ListView is not empty.
             if (lv.SelectedItems.Count > 0)
             {
+                // Gets the text of the selected item's first column.
                 string itemId = lv.SelectedItems[0].SubItems[0].Text;
                 int parsedId;
                 if (int.TryParse(itemId, out parsedId))
                 {
+                    // Returns the Id of the selected item in the ListView.
                     return parsedId;
                 }
             }

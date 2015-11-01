@@ -172,6 +172,7 @@
             this.lvAuthorsId,
             this.lvAuthorsName});
             this.lvAuthors.FullRowSelect = true;
+            this.lvAuthors.HideSelection = false;
             this.lvAuthors.Location = new System.Drawing.Point(44, 30);
             this.lvAuthors.MultiSelect = false;
             this.lvAuthors.Name = "lvAuthors";

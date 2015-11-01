@@ -17,22 +17,24 @@ using System.Windows.Forms;
 namespace Library.GUIExtensions
 {
     /// <summary>
-    /// Creates and maps columndata to a matrix corresponding to a certain listview structure.
+    /// Creates and maps columndata to a matrix corresponding to a certain ListView structure.
     /// ListView structure == (Order, Content and Number of Columns in a ListView). 
     /// This mapping is critical for the ListViewPrinter to work as intended.
     /// </summary>
     public static class ColumnDataMapper
     {
-        //
         // If structure of target datarepresentator changes => 
         // make corresponding changes to the creation of columndata in this 
         // class to represent the new columns of the datarepresentator.
         // ...Or...
-        // Add methods to create custom columndata.
+        // Add methods to create new custom columndata.
 
 
-        // Maps to the standard book ListView.
-
+        /// <summary>
+        /// Maps to the standard book ListView.
+        /// </summary>
+        /// <param name="books"></param>
+        /// <returns></returns>
         public static List<string[]> StandardBookColumnDataMatrix(IEnumerable<Book> books)
         {
             if (books == null)
@@ -43,9 +45,10 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<Book> preventDeferredExecutionOnBooks = books;
+                IEnumerable<Book> preventDeferredExecutionOnBooks = books.ToList();
                 foreach (Book b in preventDeferredExecutionOnBooks)
                 {
+                    // Add data to a new row in the datamatrix.
                     rows.Add(
                         new string[]
                     {                        
@@ -60,8 +63,11 @@ namespace Library.GUIExtensions
             }
         }
 
-        // Maps to the standard BookCopy ListView.
-
+        /// <summary>
+        /// Maps to the standard BookCopy ListView.
+        /// </summary>
+        /// <param name="bookCopies"></param>
+        /// <returns></returns>
         public static List<string[]> StandardBookCopyColumnDataMatrix(IEnumerable<BookCopy> bookCopies)
         {
             if (bookCopies == null)
@@ -71,7 +77,7 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<BookCopy> preventDeferredExecutionOnBookCopies = bookCopies;
+                IEnumerable<BookCopy> preventDeferredExecutionOnBookCopies = bookCopies.ToList();
                 foreach (BookCopy bc in preventDeferredExecutionOnBookCopies)
                 {
                     rows.Add(
@@ -85,8 +91,11 @@ namespace Library.GUIExtensions
             }
         }
 
-        // Maps to the standard Authors ListView.
-
+        /// <summary>
+        /// Maps to the standard Authors ListView.
+        /// </summary>
+        /// <param name="authors"></param>
+        /// <returns></returns>
         public static List<string[]> StandardAuthorColumnDataMatrix(IEnumerable<Author> authors)
         {
             if (authors == null)
@@ -96,7 +105,7 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<Author> preventDeferredExecutionOnAuthors = authors;
+                IEnumerable<Author> preventDeferredExecutionOnAuthors = authors.ToList();
                 foreach (Author a in preventDeferredExecutionOnAuthors)
                 {
                     rows.Add(
@@ -110,8 +119,11 @@ namespace Library.GUIExtensions
             }
         }
 
-        // Maps to the standard Members ListView.
-
+        /// <summary>
+        /// Maps to the standard Members ListView.
+        /// </summary>
+        /// <param name="members"></param>
+        /// <returns></returns>
         public static List<string[]> StandardMemberColumnDataMatrix(IEnumerable<Member> members)
         {
             if (members == null)
@@ -121,7 +133,7 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<Member> preventDeferredExecutionOnMembers = members;
+                IEnumerable<Member> preventDeferredExecutionOnMembers = members.ToList();
                 foreach (Member m in preventDeferredExecutionOnMembers)
                 {
                     rows.Add(
@@ -136,8 +148,11 @@ namespace Library.GUIExtensions
             }
         }
 
-        // Maps to the standard Loans ListView.
-
+        /// <summary>
+        /// Maps to the standard Loans ListView.
+        /// </summary>
+        /// <param name="loans"></param>
+        /// <returns></returns>
         public static List<string[]> StandardLoanColumnDataMatrix(IEnumerable<Loan> loans)
         {
             if (loans == null)
@@ -147,7 +162,7 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<Loan> preventDeferredExecutionOnLoans = loans;
+                IEnumerable<Loan> preventDeferredExecutionOnLoans = loans.ToList();
                 foreach (Loan l in preventDeferredExecutionOnLoans)
                 {
                     rows.Add(
@@ -169,15 +184,17 @@ namespace Library.GUIExtensions
 
         /* Custom Columndata Mapping
          * 
-         * ..Map to specific ListView structures in the custom methods below..
+         * ..Map to a specific ListView structure in the custom methods below..
          * 
          */
 
-        /* Maps to a compact version of Book ColumnData */
-
+        /// <summary>
+        /// EXAMPLE: Maps to a compact version of Book ColumnData.
+        /// </summary>
+        /// <param name="books"></param>
+        /// <returns></returns>
         public static List<string[]> CompactBookColumnDataMatrix(IEnumerable<Book> books)
         {
-            
             if (books == null)
             {
                 return default(List<string[]>);
@@ -185,7 +202,7 @@ namespace Library.GUIExtensions
             else
             {
                 List<string[]> rows = new List<string[]>();
-                IEnumerable<Book> preventDeferredExecutionOnBooks = books;
+                IEnumerable<Book> preventDeferredExecutionOnBooks = books.ToList();
                 foreach (Book b in preventDeferredExecutionOnBooks)
                 {
                     rows.Add(
@@ -200,8 +217,11 @@ namespace Library.GUIExtensions
 
         }
 
-        /* Maps to a listview with BookCopyId and some bookinformation */
-
+        /// <summary>
+        /// Maps to a listview with BookCopyId and some bookinformation.
+        /// </summary>
+        /// <param name="bookCopies"></param>
+        /// <returns></returns>
         public static List<string[]> BookCopyIncludingBookColumnDataMatrix(IEnumerable<BookCopy> bookCopies)
         {
 
@@ -226,7 +246,6 @@ namespace Library.GUIExtensions
                 }
                 return rows;
             }
-
         }
 
     }

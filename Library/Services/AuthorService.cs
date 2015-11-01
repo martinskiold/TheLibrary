@@ -12,12 +12,21 @@ using System.Data.Entity;
 
 namespace Library.Services
 {
+    /// <summary>
+    /// Application logic regarding Authors.
+    /// </summary>
     public class AuthorService : IService<UpdatedEventArgs<Author>>
     {
+        // Handles events triggered from changes to the library's Authors.
         public event EventHandler<UpdatedEventArgs<Author>> Updated;
-        
+
+        // The repositories used by this libraryservice.
         private AuthorRepository _authorRepository;
 
+        /// <summary>
+        /// Creates the application logic context necessary for handling the Authors of The library.
+        /// </summary>
+        /// <param name="repoFactory"></param>
         public AuthorService(RepositoryFactory repoFactory) 
         {
             _authorRepository = repoFactory.GetAuthorRepository();
@@ -128,11 +137,13 @@ namespace Library.Services
         public IEnumerable<Book> BooksFromAuthor(int id) 
         {
             var author = _authorRepository.Find(id);
+            // If there was no author with the given id.
             if(author == null)
             {
                 return default(IEnumerable<Book>);
             }
             var authorBooks = author.Books;
+            // If the author has no books.
             if (authorBooks == null) 
             {
                 return default(IEnumerable<Book>);

@@ -195,6 +195,7 @@
             this.lvIntroBooksDescription,
             this.lvIntroBooksAuthor});
             this.lvIntroBooks.FullRowSelect = true;
+            this.lvIntroBooks.HideSelection = false;
             this.lvIntroBooks.Location = new System.Drawing.Point(6, 213);
             this.lvIntroBooks.Name = "lvIntroBooks";
             this.lvIntroBooks.Size = new System.Drawing.Size(761, 163);
@@ -389,6 +390,7 @@
             this.lvAuthorsId,
             this.lvAuthorsName});
             this.lvAuthors.FullRowSelect = true;
+            this.lvAuthors.HideSelection = false;
             this.lvAuthors.Location = new System.Drawing.Point(6, 19);
             this.lvAuthors.Name = "lvAuthors";
             this.lvAuthors.Size = new System.Drawing.Size(186, 147);
@@ -427,6 +429,7 @@
             this.lvBooksBookDescription,
             this.lvBooksAuthor});
             this.lvBooks.FullRowSelect = true;
+            this.lvBooks.HideSelection = false;
             this.lvBooks.Location = new System.Drawing.Point(6, 19);
             this.lvBooks.Name = "lvBooks";
             this.lvBooks.Size = new System.Drawing.Size(576, 167);
@@ -502,11 +505,11 @@
             // 
             // btnAddOverdue
             // 
-            this.btnAddOverdue.Location = new System.Drawing.Point(506, 343);
+            this.btnAddOverdue.Location = new System.Drawing.Point(514, 343);
             this.btnAddOverdue.Name = "btnAddOverdue";
-            this.btnAddOverdue.Size = new System.Drawing.Size(163, 23);
+            this.btnAddOverdue.Size = new System.Drawing.Size(155, 23);
             this.btnAddOverdue.TabIndex = 4;
-            this.btnAddOverdue.Text = "Add Overdue -16 days";
+            this.btnAddOverdue.Text = "Add 1 month overdue";
             this.btnAddOverdue.UseVisualStyleBackColor = true;
             this.btnAddOverdue.Click += new System.EventHandler(this.btnAddOverdue_Click);
             // 
@@ -701,6 +704,7 @@
             this.lvMembersLoansBookCopy});
             this.lvMembersLoans.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lvMembersLoans.FullRowSelect = true;
+            this.lvMembersLoans.HideSelection = false;
             this.lvMembersLoans.Location = new System.Drawing.Point(186, 32);
             this.lvMembersLoans.Name = "lvMembersLoans";
             this.lvMembersLoans.Size = new System.Drawing.Size(575, 85);
@@ -745,6 +749,7 @@
             this.lvMembersPersonalId,
             this.lvMembersName});
             this.lvMembers.FullRowSelect = true;
+            this.lvMembers.HideSelection = false;
             this.lvMembers.Location = new System.Drawing.Point(7, 32);
             this.lvMembers.Name = "lvMembers";
             this.lvMembers.Size = new System.Drawing.Size(173, 295);
@@ -901,7 +906,6 @@
             this.label6.Size = new System.Drawing.Size(97, 13);
             this.label6.TabIndex = 6;
             this.label6.Text = "All Returned Loans";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label5
             // 

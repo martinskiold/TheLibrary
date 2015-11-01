@@ -73,6 +73,8 @@ namespace Library.Repositories
             }
             catch
             {
+                // Catches the exception thrown when trying to find an invalid record in the Database.
+                // I do this so that I can make sure the find-operation didn't work.
                 result = null;
             }
 
@@ -101,6 +103,7 @@ namespace Library.Repositories
             }
             catch (NullReferenceException) 
             {
+                // Rethrows Nullreference exception.
                 throw;
             }
         }
